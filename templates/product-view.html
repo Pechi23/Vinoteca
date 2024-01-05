@@ -8,7 +8,7 @@
 {% if product.available %}
 <div class="card">
     <div class="card-body">
-        <img class="card-img-left" alt="Card image" src="{{base_url}}/{{product.slug}}.png">
+        <img class="card-img-top" alt="Card image" style="max-width: 200px; max-height: 600px" src="{{base_url}}/{{product.slug}}.png">
         <h1 class="card-title">{{ product.name }}</h1>
         <h5 style="text-align: justify; text-indent: 5%;">{{ product.description }}</h5>
         <h5 class="text-start">Country: {{ product.country }}</h5>

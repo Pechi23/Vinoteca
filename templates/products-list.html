@@ -18,7 +18,7 @@
 <div class="d-flex flex-column align-items-strech">
 {% for product in products %}
     <div class="card d-flex justify-content-around">
-        <img class="card-img-top img-fluid mx-auto" style="width: 10%; height: 10%;" alt="Card image" src="{{base_url}}/{{product.slug}}.png">
+        <img class="card-img-top img-fluid mx-auto" style="max-width: 150px; max-height: 500px" alt="Card image" src="{{base_url}}/{{product.slug}}.png">
         <div class="card-body">
             <h4 class="card-title">{{ product.name }}</h3>   
             {% if product.discount %}
