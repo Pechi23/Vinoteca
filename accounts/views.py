@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login,logout
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import Cart
+from .models import Cart,CartProduct
 import random
 
 
@@ -22,6 +22,11 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request,user)
+            try:
+                cart = Cart.objects.get(user=request.user)
+            except:
+                cart = Cart(user=request.user)
+                cart.save()
             return redirect("/")
     else:
         form = AuthenticationForm(request)
@@ -40,22 +45,24 @@ def logout_view(request):
 
 @login_required
 def cart_view(request):
-    try:
-        cart = Cart.objects.get(user=request.user)
-    except:
-        cart = Cart(user=request.user)
-        cart.save()
-
+    cart = Cart.objects.get(user=request.user)
+    cart_products = CartProduct.objects.filter(cart=cart)
+    
     context = {
         "cart":cart,
+        "cart_products":cart_products,
     }
     return render(request, "cart.html", context=context)
 
 @login_required
 def cart_delete_view(request):
     cart = Cart.objects.get(user=request.user)
-    cart.products.clear()
-    cart.save()
+
+    qs = CartProduct.objects.filter(cart=cart)
+    for cart_product in CartProduct.objects.all():
+        if cart_product in qs:
+            cart_product.delete()
+
     return redirect("/accounts/cart/")
 
 @login_required

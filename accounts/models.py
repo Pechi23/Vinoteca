@@ -5,26 +5,12 @@ from products.models import Product
 
 USER = settings.AUTH_USER_MODEL
 
-class CartProduct(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name = "cart_products")
-    quantity = models.PositiveIntegerField(default=1)
-    
-    @property
-    def total_price(self):
-        if self.product.discount is not None:
-            total = self.product.price_after_discount * self.quantity
-        else:
-            total = self.product.price * self.quantity
-        return round(total,2)
-
 class Cart(models.Model):
     user = models.ForeignKey(USER, on_delete = models.CASCADE)
-    products = models.ManyToManyField(CartProduct)
-
 
     @property
     def total_price(self):
-        total = sum(product.total_price for product in self.products.all())
+        total = sum(product.total_price for product in CartProduct.objects.filter(cart=self))
         return round(total,2)
     
     @property
@@ -38,8 +24,23 @@ class Cart(models.Model):
 
     @property
     def count(self):
-        count = sum(product.quantity for product in self.products.all())
+        count = sum(product.quantity for product in CartProduct.objects.filter(cart=self))
         return count
+    
+class CartProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING, related_name = "cart_products")
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True, blank=True)
+    quantity = models.PositiveIntegerField(default=1)
+    
+    @property
+    def total_price(self):
+        if self.product.discount is not None:
+            total = self.product.price_after_discount * self.quantity
+        else:
+            total = self.product.price * self.quantity
+        return round(total,2)
+
+
 
 
     

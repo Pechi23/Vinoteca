@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<h2 style="text-align: center;">Hi {{ request.user }}, this is what your cart contains so far:</h2>
+<h2 style="text-align: center;">Hi {{ cart.user.username }}, this is what your cart contains so far:</h2>
 
-{% for cart_product in cart.products.all %}
+{% for cart_product in cart_products %}
     <div class="card">
         <div class="card-body">
             <h3 class="card-title">{{ cart_product.product.name }}</h3>

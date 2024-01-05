@@ -24,16 +24,14 @@ def product_view(request, slug=None):
     if request.method == "POST" :
         cart = Cart.objects.get(user=request.user)
         try:
-            cart_product = cart.products.get(product=context['product'])
+            cart_product = CartProduct.objects.filter(cart=cart).get(product=context['product'])
             if cart_product is not None:
                 cart_product.quantity = cart_product.quantity + 1
                 cart_product.save()
         except:
-            new_cart_product = CartProduct(product=context['product'],quantity=1)
+            new_cart_product = CartProduct(product=context['product'],cart=cart,quantity=1)
             new_cart_product.save()
-            cart.products.add(new_cart_product)
             
-        cart.save()
         return redirect("/products/")
         
     return render(request,"product-view.html", context=context)
