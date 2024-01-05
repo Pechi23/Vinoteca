@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="text-align: center;">Hi {{ request.user }}, this is what your cart contains so far:</h2>
+
+{% for cart_product in cart.products.all %}
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">{{ cart_product.product.name }}</h3>
+            <h5 class="card-text">Price: {{ cart_product.product.price_after_discount }}$</h3> 
+            <h6 class="card-text">Quantity: {{ cart_product.quantity }} Total price: {{ cart_product.total_price }}$</h6>
+        </div>
+    </div>
+    <br>
+{% endfor %}
+
+<div class="card">
+    <div class="card-body d-flex justify-content-around">
+        <h5 class="card-text">Total quantity: {{ cart.count }}</h5> 
+        <h5 class="card-text">Total price: {{ cart.total_price }}$</h5>
+        <h5 class="card-text">Taxes: {{ cart.taxes }}$</h5>
+        {% if cart.free_shipping %}
+            <h5 class="card-text">You get free shipping!</h5>
+        {% else %}
+            <h5 class="card-text">Shipping: 7$</h5>     
+        {% endif %}
+    </div>
+</div>
+
+{% if not cart.free_shipping %}
+    <h5>Have a cart total over 100$ to get free shipping!</h5>
+{% endif %}
+<p><a class="btn btn-info my-2" role="button" href="order/">Place order</a></p>
+<p><a class="btn btn-info" role="button" href="delete/">Delete all items</a></p>
+<a class="btn btn-info" role="button" href="/products/">Shop</a>
+<a class="btn btn-info" role="button" href="/">Home</a>
+
+{% endblock content %}

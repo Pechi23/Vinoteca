@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if product.available %}
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">{{ product.name }}</h1>
+        <h4>{{ product.description }}</h4>
+        <h5>Country: {{ product.country }}</h5>
+        <h5>Year of production: {{ product.year }}</h5>
+        {% if product.discount %}
+            <h4>Old price: <del>{{ product.price }}</del>$</h4>
+            <h4 style="color:red">New price: {{ product.price_after_discount }}$  ({{ product.discount }}% Discount)</h4>
+            <h5>Tax: {{ product.tax }}$</h5>
+        {% else %}
+            <h3>Price: {{ product.price }}$  Tax: {{ product.tax }}$</h3>
+        {% endif %}
+        <form method="POST">{% csrf_token %}
+            <p><input class="btn btn-info my-2" role="button" type="submit" value="Add to cart"></p>
+        </form>
+    </div>
+</div>
+{% else %}
+    <h2>Sorry, this product isn't available right now. :( </h2>
+{% endif %}
+
+<a class="btn btn-info" role="button" href="/products/">Shop</a>
+
+
+{% endblock content %}

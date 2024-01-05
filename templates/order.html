@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container text-center">
+    {% if succes %}
+        <h3>Thank you for your order! We are thrilled to have you as a customer and hope you love your purchase.</h3>
+    {% else %}
+        <h2>Sorry, something went wrong with your order, try again please.</h2>
+    {% endif %}
+    <a class="btn btn-info" role="button" href="/">Home</a>
+
+</div>
+
+{% endblock content %}

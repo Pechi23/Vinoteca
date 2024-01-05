@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Shop</h1>
+<nav class="navbar navbar-light bg-light w-50 mx-auto justify-content-around">
+    <form class="form-inline" method="GET">
+        <input placeholder="Search" type="text" name="q">
+        <input class="btn btn-outline-success" type="submit" value="Search">
+    </form>
+</nav>
+
+<h3>Following products are listed on this site: </h3>
+
+<div class="d-flex flex-column align-items-strech">
+{% for product in products %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ product.name }}</h3>   
+            {% if product.discount %}
+                <h6 class="card-text">Old price: <del>{{ product.price }}</del></h5>    
+                <h5 class="card-text" style="color:red">New price: {{ product.price_after_discount }}$ ({{ product.discount}}% offer)</h4> 
+            {% else %}
+                <h5 class="card-text">Price: {{ product.price }}$</h4>
+            {% endif %}
+            <a class="btn btn-info" role="button" href="{{ product.slug }}">See details</a>
+        </div>
+    </div>
+    <br>
+{% endfor %}
+</div>
+
+<a class="btn btn-info my-2" role="button" href="/accounts/cart/">Cart</a>
+<a class="btn btn-info" role="button" href="/">Home</a>
+
+
+{% endblock content %}
