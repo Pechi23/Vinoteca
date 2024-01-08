@@ -11,4 +11,4 @@ def home_view(request):
             if request.user.is_authenticated:
                 cart = Cart(user=request.user)
                 cart.save()
-    return render(request, "home-view.html", context=None)
+    return render(request, "home.html", context=None)
