@@ -21,7 +21,7 @@
             <h3>Price: {{ product.price }}$  Tax: {{ product.tax }}$</h3>
         {% endif %}
         <form method="POST">{% csrf_token %}
-            <p><input class="btn btn-info my-2" role="button" type="submit" value="Add to cart"></p>
+            <p><input class="btn btn-success my-2" role="button" type="submit" value="Add to cart"></p>
         </form>
     </div>
 </div>
@@ -29,7 +29,7 @@
     <h2>Sorry, this product isn't available right now. :( </h2>
 {% endif %}
 
-<a class="btn btn-info my-2" role="button" href="/products/">Shop</a>
+<a class="btn btn-success my-2" role="button" href="/products/">Shop</a>
 
 
 {% endblock content %}

@@ -69,14 +69,14 @@ def cart_delete_view(request):
 def order_view(request):
     cart = Cart.objects.get(user=request.user)
     cart.save()
-    #russian rullete for order succes (with 1/3 fail rate)
+    #russian rullete for order success (with 1/3 fail rate)
     ordered = True
     rand_int = random.randint(1,3)
     if rand_int == 3:
         ordered = False
 
     context = {
-        "succes": ordered,
+        "success": ordered,
     }
 
     return render(request,"order.html", context=context)
