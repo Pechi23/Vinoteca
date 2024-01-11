@@ -1,8 +1,0 @@
-user -> clienti (denumire) 
-client -> factura (serie,numar,pozitii,client)
-pozitii <- produse,cantitate
-produse (pret,denumire)
-
-CRUD operations pe facturi
-
-bootstrap, simple css
